@@ -1,82 +1,47 @@
 // Problem Statement:
-// Write a program to convert an Infix expression to Postfix form.
-// Infix expression: The expression of the form “a operator b” (a + b) i.e., when an operator is in-between every pair of operands.
-// Postfix expression: The expression of the form “a b operator” (ab+) i.e., When every pair of operands is followed by an operator.
-
-// Examples:
-// Input: A + B * C + D
-// Output: ABC*+D+
-
-// Examples:
-// Input: ((A + B) – C * (D / E)) + F
-// Output: AB+CDE/*-F+
+// Auxiliary Given a singly linked list, find the middle of the linked list. For example, if the given linked list is 1->2->3->4->5 then the output should be 3. 
+// If there are even nodes, then there would be two middle nodes, we need to print the second middle element. 
+// For example, if the given linked list is 1->2->3->4->5->6 then the output should be 4. 
 
 // Problem Solution:
-// C++ code to convert infix expression to postfix
-#include <bits/stdc++.h>
+#include <iostream>
+#include<bits/stdc++.h>
 using namespace std;
-// Function to return precedence of operators
-int prec(char c)
-{
-	if (c == '^')
-		return 3;
-	else if (c == '/' || c == '*')
-		return 2;
-	else if (c == '+' || c == '-')
-		return 1;
-	else
-		return -1;
-}
-// The main function to convert infix expression
-// to postfix expression
-void infixToPostfix(string s)
-{
-	stack<char> st;
-	string result;
-  
-	for (int i = 0; i < s.length(); i++) {
-		char c = s[i];
-		// If the scanned character is
-		// an operand, add it to output string.
-		if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-			|| (c >= '0' && c <= '9'))
-			result += c;
-		// If the scanned character is an
-		// ‘(‘, push it to the stack.
-		else if (c == '(')
-			st.push('(');
-		// If the scanned character is an ‘)’,
-		// pop and add to output string from the stack
-		// until an ‘(‘ is encountered.
-		else if (c == ')') {
-			while (st.top() != '(') {
-				result += st.top();
-				st.pop();
-			}
-			st.pop();
-		}
-		// If an operator is scanned
-		else {
-			while (!st.empty()
-				&& prec(s[i]) <= prec(st.top())) {
-				result += st.top();
-				st.pop();
-			}
-			st.push(c);
-		}
-	}
-	// Pop all the remaining elements from the stack
-	while (!st.empty()) {
-		result += st.top();
-		st.pop();
-	}
-	cout << result << endl;
-}
 
-// Driver code
-int main()
-{
-	string exp = "a+b*(c^d-e)^(f+g*h)-i";
-	infixToPostfix(exp);
+class Node{
+	public:
+		int data;
+		Node *next;
+};
+
+class NodeOperation{
+public:
+	// Function to add a new node
+	void pushNode(class Node** head_ref,int data_val){
+		
+		// Allocate node
+		class Node *new_node = new Node();
+		// Put in the data
+		new_node->data = data_val;
+		// Link the old list of the new node
+		new_node->next = *head_ref;
+		// move the head to point to the new node
+		*head_ref = new_node;
+	}
+};
+
+int main() {
+class Node *head = NULL;
+	class NodeOperation *temp = new NodeOperation();
+	for(int i=5; i>0; i--){
+		temp->pushNode(&head, i);
+	}
+	vector<int>v;
+	while(head!=NULL){
+	v.push_back(head->data);
+	head=head->next;
+	}
+	cout<<"Middle Value Of Linked List is :";
+	cout<<v[v.size()/2]<<endl;
 	return 0;
 }

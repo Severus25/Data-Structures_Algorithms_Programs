@@ -4,44 +4,73 @@
 // For example, if the given linked list is 1->2->3->4->5->6 then the output should be 4. 
 
 // Problem Solution:
-#include <iostream>
-#include<bits/stdc++.h>
-using namespace std;
+// C program to find middle of linked list
+#include<stdio.h>
+#include<stdlib.h>
 
-class Node{
-	public:
-		int data;
-		Node *next;
+/* Link list node */
+struct Node
+{
+	int data;
+	struct Node* next;
 };
 
-class NodeOperation{
-public:
-	// Function to add a new node
-	void pushNode(class Node** head_ref,int data_val){
-		
-		// Allocate node
-		class Node *new_node = new Node();
-		// Put in the data
-		new_node->data = data_val;
-		// Link the old list of the new node
-		new_node->next = *head_ref;
-		// move the head to point to the new node
-		*head_ref = new_node;
-	}
-};
+/* Function to get the middle of the linked list*/
+void printMiddle(struct Node *head)
+{
+	struct Node *slow_ptr = head;
+	struct Node *fast_ptr = head;
 
-int main() {
-class Node *head = NULL;
-	class NodeOperation *temp = new NodeOperation();
-	for(int i=5; i>0; i--){
-		temp->pushNode(&head, i);
+	if (head!=NULL)
+	{
+		while (fast_ptr != NULL && fast_ptr->next != NULL)
+		{
+			fast_ptr = fast_ptr->next->next;
+			slow_ptr = slow_ptr->next;
+		}
+		printf("The middle element is [ %d ]\n\n", slow_ptr->data);
 	}
-	vector<int>v;
-	while(head!=NULL){
-	v.push_back(head->data);
-	head=head->next;
+}
+
+void push(struct Node** head_ref, int new_data)
+{
+	/* allocate node */
+	struct Node* new_node =
+		(struct Node*) malloc(sizeof(struct Node));
+
+	/* put in the data */
+	new_node->data = new_data;
+
+	/* link the old list of the new node */
+	new_node->next = (*head_ref);
+
+	/* move the head to point to the new node */
+	(*head_ref) = new_node;
+}
+
+// A utility function to print a given linked list
+void printList(struct Node *ptr)
+{
+	while (ptr != NULL)
+	{
+		printf("%d->", ptr->data);
+		ptr = ptr->next;
 	}
-	cout<<"Middle Value Of Linked List is :";
-	cout<<v[v.size()/2]<<endl;
+	printf("NULL\n");
+}
+
+/* Driver program to test above function*/
+int main()
+{
+	/* Start with the empty list */
+	struct Node* head = NULL;
+	int i;
+
+	for (i=5; i>0; i--)
+	{
+		push(&head, i);
+		printList(head);
+		printMiddle(head);
+	}
 	return 0;
 }
